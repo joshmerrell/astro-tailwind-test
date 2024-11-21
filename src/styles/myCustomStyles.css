@@ -2,3 +2,15 @@
 * {
     outline: 1px dotted gray;
 }
+
+.error {
+    background: red;
+    color: white;
+    padding: 1em;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+.noterror {
+    display: none;
+}

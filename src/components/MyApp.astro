@@ -1,9 +1,35 @@
 ---
-// const response = await fetch('');
-// const allTheData = await response.json();
+
+interface Props {
+    apiSection:string;
+    apiDoc:string;
+}
+
+const { apiSection, apiDoc } = Astro.props;
+
+const dataSource = `https://www.dnd5eapi.co/api/${apiSection}/${apiDoc}`;
+
+const errorData = {
+    error: "",
+    class: "noterror"
+};
+
+
+const response = await fetch(dataSource).then(r => r.json()).catch(e => {
+    errorData.error = e;
+    errorData.class = "error";
+});
+
+function appendError(e) {
+    const errElem = document.createElement("h1");
+    errElem.classList.add("error");
+    errElem.textContent = e;
+    document.body.append(errElem);
+}
+
 ---
-
-
-
-
-
+<h1 class={errorData.class}>{errorData.error}</h1>
+<section>
+    <h2 class="name">{response?.full_name}</h2>
+    <h2>apiDoc: {apiDoc}</h2>
+</section>
